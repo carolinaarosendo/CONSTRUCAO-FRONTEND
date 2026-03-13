@@ -1,0 +1,517 @@
+/* =========================================
+   RESET BÁSICO
+========================================= */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Instrument Serif', serif; /* Muda a fonte */
+}
+
+body {
+  background-color: #fafafa;
+  padding: 20px;
+}
+
+/* =========================================
+   CABEÇALHO (HEADER)
+   Conceito: Flex Row com space-between
+========================================= */
+.header-main {
+  background-color: #382F32;
+  color: #FBC5D8;
+  padding: 15px 20px;
+}
+
+/* Container Principal do Header */
+.header-container {
+  display: flex;
+  justify-content: space-between; /* Separa Logo, Busca e Ações */
+  align-items: center;
+  max-width: 1400px; /* Aumentei um pouco para caber tudo sem apertar */
+  margin: 0 auto;
+  padding: 10px 20px;
+}
+
+/* Itens da Direita (Ações) - Ajustado para não quebrar */
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 15px; /* Espaçamento entre ícones */
+}
+
+/* Itens individuais (Ícone + Texto) */
+.action-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+  color: #FBC5D8;
+}
+
+.header-icon {
+  width: 22px; /* Tamanho padronizado para os ícones do topo */
+  height: auto;
+}
+
+/* Estilo do Botão Vellin Club (Card rosa claro) */
+.vellin-club-btn {
+  background-color: #FDEEF4; /* Rosa bem clarinho da imagem */
+  color: #382F32;
+  padding: 6px 12px;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  line-height: 1.1;
+  text-decoration: none;
+}
+
+.club-title { font-size: 0.8rem; font-weight: bold; }
+.club-sub { font-size: 0.65rem; font-weight: normal; }
+
+/* Logo */
+.logo-section { display: flex; align-items: center; gap: 10px; }
+.bow-icon { width: 80px; }
+.brand-name { font-size: 1.8rem; font-family: serif; }
+.product-info-bar {
+  display: flex;
+  justify-content: space-between; /* Texto na esquerda, Ordenar na direita */
+  align-items: center;
+  padding: 15px 50px;
+  background-color: transparent; /* Ou a cor do seu fundo */
+  font-family: 'Instrument Serif', serif; /* Fonte usada no seu projeto */
+  color: #382F32;
+}
+
+.showing-items {
+  font-size: 1rem;
+  opacity: 0.8;
+}
+
+/* Container do lado direito */
+.sort-container {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.sort-wrapper {
+  display: flex;
+  align-items: center;
+  background-color: #FDEEF4; /* Rosa claro conforme imagem */
+  border-radius: 20px;
+  padding: 5px 15px;
+  position: relative;
+}
+
+.sort-wrapper select {
+  background: transparent;
+  border: none;
+  outline: none;
+  padding-right: 25px;
+  appearance: none; /* Remove seta padrão */
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.sort-icon {
+  width: 14px;
+  position: absolute;
+  right: 12px;
+  pointer-events: none;
+}
+
+/* Busca Arredondada */
+.search-bar {
+  display: flex;
+  background: #f8e1ea; /* Rosa clarinho da imagem */
+  border-radius: 20px;
+  padding: 5px 15px;
+  align-items: center;
+}
+.search-bar input {
+  background: transparent;
+  border: none;
+  outline: none;
+  padding: 5px;
+  width: 150px;
+}
+
+/* Itens da Direita */
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+}
+
+.action-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  font-size: 0.8rem;
+}
+
+.text-group { display: flex; flex-direction: column; line-height: 1.1; }
+
+/* Botão Vellin Club */
+.club-card {
+  background-color: #fff0f5;
+  color: #382F32;
+  padding: 8px 15px;
+  border-radius: 15px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  font-weight: bold;
+}
+.club-card small { font-size: 0.6rem; font-weight: normal; }
+
+/* Menu de Categorias */
+.category-menu {
+  background-color: #f8e1ea; /* Fundo rosa claro */
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  padding: 10px 0;
+}
+
+.category-menu a {
+  background-color: #382F32;
+  color: #FBC5D8;
+  text-decoration: none;
+  padding: 5px 20px;
+  font-size: 0.8rem;
+  font-weight: bold;
+}
+
+#banner {
+  color: #382F32;
+  font-family: 'Instrument Serif', serif;
+  align-content: center;
+  padding: 8px 30px;
+}
+#h3 {
+     color: #382F32;
+  font-family: 'Instrument Serif', serif;
+  align-content: center;
+}
+#adicionaraocarrinho {
+  color: #382F32;
+  background-color: #F1396D;
+
+}
+#comprar {
+  color: #382F32;
+  background-color: #FBC5D8;
+}
+
+.title {
+  font-size: 1.2rem;
+  color: #000;
+}
+
+.cart {
+  font-size: 2rem;
+  
+}
+
+/* =========================================
+   BARRA DE NAVEGAÇÃO
+   Conceito: Flex alinhado nas extremidades
+========================================= */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  background-color: #FFEAF2;
+  padding: 10px 30px;
+  margin-top: 10px;
+}
+
+.nav-links {
+  display: flex;
+  gap: 15px; /* Espaço entre os flex-items */
+}
+
+.nav-item {
+  width: 60px;
+  height: 15px;
+  background-color: #FFEAF2;
+  border-radius: 10px;
+}
+
+.nav-right-item {
+  width: 60px;
+  height: 15px;
+  background-color: #FFEAF2;
+  border-radius: 10px;
+}
+
+/* =========================================
+   CARROSSEL (HERO SECTION)
+   Conceito: Flex Row com elemento crescendo (flex-grow)
+========================================= */
+.carousel-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #e0e0e0;
+  margin-top: 20px;
+  padding: 20px 30px;
+  height: 250px;
+}
+
+.carousel-banner {
+  display: flex; /* Container interno para centralizar o texto */
+  justify-content: center;
+  align-items: center;
+  flex-grow: 1; /* Faz a caixa cinza ocupar todo o espaço central disponível */
+  background-color: #FFEAF2;
+  height: 100%;
+  margin: 0 30px;
+}
+
+.carousel-banner h2 {
+  color: white;
+  font-weight: normal;
+}
+
+.arrow {
+  font-size: 2rem;
+  color: #FFEAF2;
+  cursor: pointer;
+}
+
+/* =========================================
+   LISTA DE PRODUTOS
+   Conceito: Flex Row para criar os cards lado a lado
+========================================= */
+.products-container {
+  display: flex;
+  justify-content: space-between; /* Distribui os 5 cards uniformemente */
+  gap: 15px;
+  margin-top: 10px;
+  background-color: #FFEAF2
+}
+
+/* =========================================
+   CARTÃO DE PRODUTO (CARD)
+   Conceito: Flex Column para empilhar conteúdo internamente
+========================================= */
+.card {
+  display: flex;
+  flex-direction: column; /* Organiza imagem, texto e botões em coluna */
+  flex: 1; /* Faz todos os cards terem a mesma largura base */
+  padding: 10px;
+  border-radius: 5px;
+  align-items: center;
+  background-color: #FFEAF2;
+}
+
+.card-image {
+  width: 100%;
+  height: 100px;
+  background-color: white;
+  border-radius: 8px;
+  margin-bottom: 15px;
+}
+
+.card-desc {
+  font-weight: bold;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+/* Botões genéricos */
+.btn {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 8px;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.btn-cart {
+  background-color: #b58b8b; /* Cor parecida com a do wireframe */
+}
+
+.btn-buy {
+  background-color: #8bb590; /* Cor parecida com a do wireframe */
+  margin-bottom: 0;
+}
+/* Container dos produtos */
+.products-container {
+  display: flex;
+  flex-wrap: wrap;          /* Permite que os itens pulem de linha */
+  justify-content: center;  /* Centraliza o bloco na tela */
+  gap: 30px;                /* Espaçamento entre os cards */
+  padding: 40px 20px;
+  background-color: #FDEEF4; 
+}
+
+/* Card Padronizado para 3 por linha */
+.card {
+  display: flex;
+  flex-direction: column;
+  background-color: #FFFFFF;
+  padding: 20px;
+  
+  /* CÁLCULO PARA 3 ITENS: 
+     Divide 100% por 3 e desconta o espaço do GAP */
+  width: calc(33.333% - 30px); 
+  min-width: 280px;         /* Garante que não fiquem finos demais em telas menores */
+  
+  min-height: 550px;
+  border-radius: 8px;
+  text-align: center;
+  box-sizing: border-box;   /* Garante que o padding não aumente a largura */
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  background-color: #FFFFFF;
+  padding: 15px; /* Diminuído para ser mais compacto */
+  width: calc(33.333% - 25px); 
+  /* Remova ou diminua o min-height fixo */
+  min-height: 450px; /* Ajuste este valor até ficar do tamanho que deseja */
+  border-radius: 8px;
+  text-align: center;
+  justify-content: space-between; /* Alinha o conteúdo sem sobrar tanto espaço */
+}
+
+.card img {
+  height: 180px; /* Diminuir a altura da imagem ajuda muito */
+  width: auto;
+  margin: 0 auto 10px auto;
+  object-fit: contain;
+}
+/* Imagem fixa para manter o alinhamento */
+.card img {
+  width: 100%;
+  height: 250px;
+  object-fit: contain;
+  margin-bottom: 15px;
+}
+
+/* =========================================
+   RODAPÉ
+========================================= */
+/* Container das Colunas (Flexbox) */
+
+.footer {
+  background-color: #382F32;
+  color: #FBC5D8;
+  padding: 40px 20px;
+  text-align: left; /* Mantém o alinhamento da imagem */
+  font-family: sans-serif;
+}
+
+/* Newsletter */
+.footer-newsletter {
+  margin-bottom: 30px;
+}
+
+.footer-newsletter h2 { font-size: 1.4rem; margin-bottom: 5px; }
+.footer-newsletter h3 { font-size: 1rem; font-weight: normal; margin-bottom: 15px; }
+
+.newsletter-form {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.newsletter-form input {
+  padding: 10px;
+  border: 1px solid #FBC5D8;
+  background: transparent;
+  color: white;
+  flex: 1;
+}
+
+.newsletter-form button {
+  padding: 10px 20px;
+  background-color: #FBC5D8;
+  color: #382F32;
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+/* Linha divisória */
+.footer-divider {
+  border: 0;
+  border-top: 1px solid rgba(251, 197, 216, 0.2);
+  margin: 30px 0;
+}
+
+/* Container das Colunas (Flexbox) */
+.footer-columns {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap; /* Ajusta para celular */
+  gap: 20px;
+}
+
+.footer-col {
+  flex: 1;
+  min-width: 180px;
+}
+
+.footer-col h4 {
+  color: #FBC5D8;
+  margin-bottom: 15px;
+  font-size: 1.1rem;
+}
+
+.footer-col ul {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-col ul li {
+  margin-bottom: 8px;
+}
+
+.footer-col ul li a {
+  color: #FFFFFF; /* Links das colunas em branco como na imagem */
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: normal;
+}
+
+/* Link de Privacidade Roxo (Segunda Imagem) */
+.link-privacidade {
+  color: #8a70ff;
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+/* Redes Sociais */
+.footer-socials {
+  text-align: center;
+  margin-top: 30px;
+}
+
+.social-icons {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+
+.social-icons img {
+  width: 25px;
+  filter: brightness(0) invert(1); /* Deixa os ícones brancos */
+  transition: 0.3s;
+}
+
+.footer-copy {
+  text-align: center;
+  font-size: 0.8rem;
+  margin-top: 20px;
+  opacity: 0.6;
+}
