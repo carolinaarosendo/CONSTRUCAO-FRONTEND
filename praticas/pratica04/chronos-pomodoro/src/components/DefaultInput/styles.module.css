@@ -1,0 +1,14 @@
+.input {
+  /* Centraliza o texto que você digita e o placeholder */
+  text-align: center; 
+  
+  /* Deixa o texto do placeholder um pouco mais sutil */
+  font-style: italic;
+  color: var(--gray-500); 
+  
+  /* Dica: se quiser tirar o fundo branco e deixar só a linha, use: */
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid var(--primary);
+  color: white;
+}
