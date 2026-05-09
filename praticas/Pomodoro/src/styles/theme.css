@@ -1,0 +1,132 @@
+/* src/styles/theme.css */
+/* TEMA CLARO */
+:root {
+  --gray-100: #e6e9f0;
+  --gray-200: #cdd3e1;
+  --gray-300: #aab3cc;
+  --gray-400: #555f7d;
+  --gray-500: #454f6a;
+  --gray-600: #363d56;
+  --gray-700: #272f43;
+  --gray-800: #181f2e;
+  --gray-900: #0a0f1a;
+
+  --primary-light: #4de7b7;
+  --primary: #0da170;
+  --primary-dark: #065f46;
+
+  --link-color: #10b981;
+  --link-hover: #0b8a60;
+
+  --success: #22c55e;
+  --warning: #eab308;
+  --error: #991b1b;
+  --info: #0ea5e9;
+
+  --text-over-primary: #0a0f1a;
+  --text-over-primary-dark: #e6e9f0;
+  --text-over-primary-light: #0a0f1a;
+  --text-over-success: #0a0f1a;
+  --text-over-warning: #0a0f1a;
+  --text-over-error: #e6e9f0;
+  --text-over-info: #0a0f1a;
+
+  --text-default: #e6e9f0;
+  --text-muted: #aab3cc;
+
+  --disabled: #555f7d;
+  --text-disabled: #aab3cc;
+}
+:root {
+  /* Cores da sua nova paleta */
+  --bg-color: #2C2B4B;        /* Azul escuro (Fundo) */
+  --primary: #A75293;         /* Roxo vibrante (Destaques/Botões) */
+  --secondary: #9C7A9D;       /* Roxo acinzentado */
+  --accent: #9DDACB;          /* Verde água (Ícones/Sucesso) */
+  --text-light: #F8DCB4;      /* Bege claro (Texto principal) */
+  
+  /* Variáveis de suporte */
+  --text-muted: rgba(248, 220, 180, 0.6);
+  --white: #FFFFFF;
+}
+/* src/styles/theme.css */
+
+/* TEMA DARK (PADRÃO) */
+:root {
+  --gray-100: #e6e9f0;
+  --gray-200: #cdd3e1;
+  --gray-300: #aab3cc;
+  --gray-400: #555f7d;
+  --gray-500: #454f6a;
+  --gray-600: #363d56;
+  --gray-700: #272f43;
+  --gray-800: #181f2e;
+  --gray-900: #0a0f1a;
+
+  --primary-light: #4de7b7;
+  --primary: #A75293;         /* Sua cor Roxa */
+  --primary-dark: #065f46;
+
+  --link-color: #10b981;
+  --link-hover: #0b8a60;
+
+  --success: #22c55e;
+  --warning: #eab308;
+  --error: #991b1b;
+  --info: #0ea5e9;
+
+  --text-default: #F8DCB4;    /* Seu Bege claro */
+  --text-muted: rgba(248, 220, 180, 0.6);
+  
+  --bg-color: #2C2B4B;        /* Seu Azul escuro */
+  --secondary: #9C7A9D;
+  --accent: #9DDACB;
+  --white: #FFFFFF;
+}
+
+/* TEMA LIGHT (SOBRESCREVE O DARK) */
+/* Quando você mudar no index.html para data-theme="light", essas cores abaixo valerão */
+:root[data-theme='light'] {
+  --gray-100: #0a0f1a;
+  --gray-200: #181f2e;
+  --gray-300: #272f43;
+  --gray-400: #363d56;
+  --gray-500: #454f6a;
+  --gray-600: #555f7d;
+  --gray-700: #aab3cc;
+  --gray-800: #cdd3e1;
+  --gray-900: #e6e9f0;
+
+  --bg-color: #e6e9f0;        /* Fundo fica claro */
+  --text-default: #0a0f1a;    /* Texto fica escuro */
+  --text-muted: #272f43;
+
+  --link-color: #0b8a60;
+  --link-hover: #065f46;
+}
+/* No seu theme.css */
+
+:root[data-theme='light'] {
+  --gray-100: #0a0f1a;
+  --gray-200: #181f2e;
+  --gray-300: #272f43;
+  --gray-400: #363d56;
+  --gray-500: #454f6a;
+  --gray-600: #555f7d;
+  --gray-700: #aab3cc;
+  --gray-800: #cdd3e1;
+  --gray-900: #e6e9f0;
+
+  /* Ajuste de fundo e texto para o modo claro */
+  --bg-color: #e6e9f0;        
+  
+  /* AQUI O SEGREDO: */
+  /* Substituímos o Bege clarinho por um cinza bem escuro para dar leitura */
+  --text-default: #181f2e;    
+  --text-light: #181f2e;      /* Forçamos o 'light' a ser escuro no tema claro */
+  
+  --text-muted: #454f6a;
+
+  --link-color: #0b8a60;
+  --link-hover: #065f46;
+}
