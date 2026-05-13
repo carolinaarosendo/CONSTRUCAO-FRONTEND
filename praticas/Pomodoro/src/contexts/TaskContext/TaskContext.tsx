@@ -1,16 +1,15 @@
-import { createContext } from 'react';
-import { initialTaskState } from './initialTaskState';
-// CORREÇÃO: Adicionado mais um nível de subida ( ../../ )
+import { createContext, type Dispatch } from "react";
 import type { TaskStateModel } from '../../models/TaskStateModel';
 
-type TaskContextProps = {
+// Definimos exatamente quais formatos uma ação pode ter
+type TaskAction = 
+  | { type: 'COUNT_DOWN'; payload: { secondsRemaining: number } }
+  | { type: 'COMPLETE_TASK' }
+  | { type: string; payload?: any }; // Fallback para outras ações
+
+export type TaskContextProps = {
   state: TaskStateModel;
-  setState: React.Dispatch<React.SetStateAction<TaskStateModel>>;
+  dispatch: Dispatch<TaskAction>;
 };
 
-const initialContextValue: TaskContextProps = {
-  state: initialTaskState,
-  setState: () => {},
-};
-
-export const TaskContext = createContext<TaskContextProps>(initialContextValue);
+export const TaskContext = createContext<TaskContextProps>({} as TaskContextProps);

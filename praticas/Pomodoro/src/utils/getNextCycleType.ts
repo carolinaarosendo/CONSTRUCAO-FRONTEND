@@ -1,4 +1,4 @@
-import { TaskModel } from '../models/TaskModel';
+import type { TaskModel } from '../models/TaskModel';
 
 // Tipamos o retorno para ser exatamente a chave 'type' do TaskModel
 export function getNextCycleType(currentCycle: number): TaskModel['type'] {
