@@ -1,0 +1,146 @@
+
+:root {
+  --color-peach: #FCD8AF;
+  --color-apricot: #FEC49B;
+  --color-coral: #FE9B91;
+  --color-pink: #FD6084;
+  --color-navy: #045071;
+  --white: #ffffff;
+}
+
+body {
+  margin: 0;
+  display: flex;
+  place-items: center;
+  min-width: 320px;
+  min-height: 100vh;
+  background: linear-gradient(135deg, var(--color-peach), var(--color-apricot));
+  font-family: 'Inter', system-ui, Avenir, Helvetica, Arial, sans-serif;
+}
+
+.login-container {
+  background-color: var(--white);
+  padding: 3rem;
+  border-radius: 20px;
+  box-shadow: 0 10px 25px rgba(4, 80, 113, 0.1);
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+}
+
+h1 {
+  color: var(--color-navy);
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+  font-weight: 800;
+}
+
+.input-group {
+  margin-bottom: 1rem;
+  text-align: left;
+}
+
+label {
+  display: block;
+  color: var(--color-navy);
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+
+input {
+  width: 100%;
+  padding: 0.8rem;
+  border: 2px solid var(--color-peach);
+  border-radius: 8px;
+  box-sizing: border-box;
+  transition: border-color 0.3s;
+}
+
+input:focus {
+  outline: none;
+  border-color: var(--color-pink);
+}
+
+button {
+  width: 100%;
+  padding: 0.8rem;
+  margin-top: 1rem;
+  border: none;
+  border-radius: 8px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.2s, background-color 0.2s;
+}
+
+.btn-primary {
+  background-color: var(--color-pink);
+  color: white;
+}
+
+.btn-primary:hover {
+  background-color: #e55576;
+  transform: translateY(-2px);
+}
+
+.btn-secondary {
+  background-color: transparent;
+  color: var(--color-navy);
+  border: 1px solid var(--color-navy);
+}
+
+.links {
+  margin-top: 1.5rem;
+  font-size: 0.9rem;
+}
+
+.links a {
+  color: var(--color-pink);
+  text-decoration: none;
+}
+/* No seu arquivo index.css */
+
+body {
+  margin: 0;
+  display: flex;
+  justify-content: center; /* Centraliza horizontalmente */
+  align-items: center;     /* Centraliza verticalmente */
+  min-height: 100vh;       /* Garante que o fundo ocupe toda a altura da tela */
+  background: linear-gradient(135deg, #FCD8AF, #FEC49B); /* Cores da sua paleta */
+  font-family: 'Inter', sans-serif;
+}
+
+.login-container {
+  background-color: #ffffff;
+  padding: 40px;
+  border-radius: 20px;
+  box-shadow: 0 10px 25px rgba(4, 80, 113, 0.15); /* Sombra usando o azul navy */
+  width: 100%;
+  max-width: 400px; /* Largura máxima para não ficar esticado em telas grandes */
+  text-align: center;
+}
+
+/* Estilos adicionais para os botões e inputs baseados na paleta */
+h1 {
+  color: #045071;
+  margin-bottom: 30px;
+}
+
+input {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 15px;
+  border: 1px solid #FCD8AF;
+  border-radius: 8px;
+  box-sizing: border-box;
+}
+
+button.btn-primary {
+  background-color: #FD6084;
+  color: white;
+  border: none;
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+}
