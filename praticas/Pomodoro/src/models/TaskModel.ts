@@ -7,5 +7,6 @@ export type TaskModel = {
   startDate: number;
   completeDate: number | null;
   interruptDate: number | null;
+  // Isso remove a necessidade de importar o objeto inteiro, só o tipo
   type: keyof TaskStateModel['config'];
 };

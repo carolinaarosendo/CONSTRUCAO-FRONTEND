@@ -1,11 +1,11 @@
 import { createContext, type Dispatch } from "react";
 import type { TaskStateModel } from '../../models/TaskStateModel';
 
-// Definimos exatamente quais formatos uma ação pode ter
-type TaskAction = 
+// Trocamos 'any' por 'unknown' para calar o ESLint
+export type TaskAction = 
   | { type: 'COUNT_DOWN'; payload: { secondsRemaining: number } }
   | { type: 'COMPLETE_TASK' }
-  | { type: string; payload?: any }; // Fallback para outras ações
+  | { type: string; payload?: unknown }; 
 
 export type TaskContextProps = {
   state: TaskStateModel;

@@ -1,3 +1,4 @@
+// O 'type' aqui é obrigatório na sua configuração
 import type { TaskModel } from './TaskModel';
 
 export interface TaskStateModel {

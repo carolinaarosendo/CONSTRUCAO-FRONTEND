@@ -130,3 +130,9 @@
   --link-color: #0b8a60;
   --link-hover: #065f46;
 }
+:root {
+  --toastify-color-success: var(--success);
+  --toastify-color-warning: var(--warning);
+  --toastify-color-error: var(--error);
+  --toastify-color-progress-light: var(--primary);
+}

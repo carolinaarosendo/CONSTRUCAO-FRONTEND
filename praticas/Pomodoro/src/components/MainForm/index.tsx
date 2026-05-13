@@ -3,26 +3,29 @@ import { PlayCircleIcon, StopCircleIcon } from 'lucide-react';
 import { useTaskContext } from '../../contexts/TaskContext/useTaskContext';
 import { getNextCycle } from '../../utils/getNextCycle';
 import { getNextCycleType } from '../../utils/getNextCycleType';
-import { TimerWorkerManager } from '../../workers/TimerWorkerManager';
+import { TaskActionTypes } from '../../contexts/TaskContext/TaskActions';
 import type { TaskModel } from '../../models/TaskModel';
+import { showMessage } from '../../adapters/showMessage';
 
 import { DefaultInput } from '../DefaultInput';
 import { DefaultButton } from '../DefaultButton';
 
-// A palavra 'export' aqui é obrigatória para matar o erro do console!
 export function MainForm() {
-  const { state, setState } = useTaskContext();
+  // Trocamos setState por dispatch
+  const { state, dispatch } = useTaskContext();
   const taskNameInput = useRef<HTMLInputElement>(null);
 
   function handleCreateNewTask(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    showMessage.dismiss(); // Limpa notificações antigas
 
-    if (!taskNameInput.current?.value.trim()) {
-      alert('Digite o nome da tarefa');
+    const taskName = taskNameInput.current?.value.trim();
+
+    if (!taskName) {
+      showMessage.warn('Digite o nome da tarefa'); // Toast em vez de alert
       return;
     }
 
-    const taskName = taskNameInput.current.value;
     const nextCycle = getNextCycle(state.currentCycle);
     const nextCycleType = getNextCycleType(nextCycle);
 
@@ -36,40 +39,24 @@ export function MainForm() {
       type: nextCycleType,
     };
 
-    // 1. Atualiza o estado
-    setState((prevState) => ({
-      ...prevState,
-      activeTask: newTask,
-      currentCycle: nextCycle,
-      secondsRemaining: newTask.duration * 60,
-      tasks: [...prevState.tasks, newTask],
-    }));
-
-    // 2. Lógica do Worker (Singleton)
-    const timerWorkerManager = TimerWorkerManager.getInstance();
-
-    timerWorkerManager.onmessage((event) => {
-      console.log('PRINCIPAL (Singleton) recebeu:', event.data);
+    // Agora enviamos uma "ordem" (action) para o Reducer
+    dispatch({ 
+      type: TaskActionTypes.CREATE_NEW_TASK, 
+      payload: newTask 
     });
 
-    timerWorkerManager.postMessage('FAVOR');
-    timerWorkerManager.postMessage('FALA_OI');
-    timerWorkerManager.postMessage('FECHAR');
-
-    taskNameInput.current.value = '';
+    showMessage.success('Tarefa iniciada!');
+    
+    if (taskNameInput.current) {
+      taskNameInput.current.value = '';
+    }
   }
 
   function handleInterruptTask() {
-    setState((prevState) => ({
-      ...prevState,
-      activeTask: null,
-      secondsRemaining: 0,
-      tasks: prevState.tasks.map((task) =>
-        task.id === prevState.activeTask?.id
-          ? { ...task, interruptDate: Date.now() }
-          : task
-      ),
-    }));
+    showMessage.dismiss();
+    showMessage.error('Tarefa interrompida!');
+    
+    dispatch({ type: TaskActionTypes.INTERRUPT_TASK });
   }
 
   return (

@@ -7,36 +7,33 @@ import {
 } from 'lucide-react';
 import styles from './styles.module.css';
 import { useState, useEffect } from 'react';
+// IMPORTANTE: Importar o Link do react-router
+import { Link } from 'react-router';
 
 type AvailableThemes = 'dark' | 'light';
 
 export function Menu() {
-  // 1. Inicialização preguiçosa buscando do localStorage
   const [theme, setTheme] = useState<AvailableThemes>(() => {
     const storageTheme =
       (localStorage.getItem('theme') as AvailableThemes) || 'dark';
     return storageTheme;
   });
 
-  // 2. Dicionário de ícones baseado no tema atual
   const nextThemeIcon = {
     dark: <SunIcon />,
     light: <MoonIcon />,
   };
 
-  // 3. Função de atualização de estado
   function handleThemeChange(
     event: React.MouseEvent<HTMLAnchorElement, MouseEvent>,
   ) {
     event.preventDefault();
-
     setTheme(prevTheme => {
       const nextTheme = prevTheme === 'dark' ? 'light' : 'dark';
       return nextTheme;
     });
   }
 
-  // 4. Efeito Colateral: Aplica no HTML e salva no Storage
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);
     localStorage.setItem('theme', theme);
@@ -44,15 +41,17 @@ export function Menu() {
 
   return (
     <nav className={styles.menu}>
-      <a
+      {/* 1. TROCAMOS <a> POR <Link> PARA A HOME */}
+      <Link
         className={styles.menuLink}
-        href='#'
+        to='/'
         aria-label='Ir para a Home'
         title='Ir para a Home'
       >
         <HouseIcon />
-      </a>
+      </Link>
 
+      {/* 2. Mantemos <a> para as rotas que ainda não criamos (ex: histórico) */}
       <a
         className={styles.menuLink}
         href='#'
