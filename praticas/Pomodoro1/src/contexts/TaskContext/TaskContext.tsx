@@ -1,15 +1,10 @@
-import { createContext, type Dispatch } from "react";
+import { createContext, type Dispatch } from 'react';
 import type { TaskStateModel } from '../../models/TaskStateModel';
+import type { TaskAction } from './TaskActions'; // <--- Importa daqui
 
-// Trocamos 'any' por 'unknown' para calar o ESLint
-export type TaskAction = 
-  | { type: 'COUNT_DOWN'; payload: { secondsRemaining: number } }
-  | { type: 'COMPLETE_TASK' }
-  | { type: string; payload?: unknown }; 
-
-export type TaskContextProps = {
+interface TaskContextType {
   state: TaskStateModel;
   dispatch: Dispatch<TaskAction>;
-};
+}
 
-export const TaskContext = createContext<TaskContextProps>({} as TaskContextProps);
+export const TaskContext = createContext<TaskContextType>({} as TaskContextType);

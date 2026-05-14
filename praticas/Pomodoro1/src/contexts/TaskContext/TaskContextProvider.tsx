@@ -1,25 +1,33 @@
 import { useEffect, useReducer, useRef, type ReactNode } from 'react';
 import { initialTaskState } from './initialTaskState';
 import { taskReducer } from './taskReducer';
-import { TaskContext } from './TaskContext';
 import { TimerWorkerManager } from '../../workers/TimerWorkerManager';
-import { TaskActionTypes } from './TaskActions'; // Verifique se é TaskActions ou taskActions
+import { TaskActionTypes } from './TaskActions'; 
 import { loadBeep } from '../../utils/loadBeep';
+import { TaskContext } from './TaskContext';
+import { useAuth } from '../AuthContext';
 
 export function TaskContextProvider({ children }: { children: ReactNode }) {
   const [state, dispatch] = useReducer(taskReducer, initialTaskState);
+  const { isAuthenticated } = useAuth(); // Pegamos o estado de autenticação
   
-  // Passo 2: useRef para persistir a função de áudio entre renders
   const playBeepRef = useRef<ReturnType<typeof loadBeep> | null>(null);
-
   const worker = TimerWorkerManager.getInstance();
+
+  // NOVO: Se o usuário deslogar, paramos o worker e resetamos o áudio
+  useEffect(() => {
+    if (!isAuthenticated) {
+      worker.terminate();
+      playBeepRef.current = null;
+      // Opcional: dispatch um comando para resetar o state das tarefas
+    }
+  }, [isAuthenticated, worker]);
 
   useEffect(() => {
     worker.onmessage(e => {
       const countDownSeconds = e.data;
 
       if (countDownSeconds <= 0) {
-        // Passo 4: Tocar no fim do ciclo
         if (playBeepRef.current) {
           playBeepRef.current();
           playBeepRef.current = null;
@@ -35,7 +43,6 @@ export function TaskContextProvider({ children }: { children: ReactNode }) {
     });
   }, [worker]);
 
-  // Efeito para gerenciar o Worker
   useEffect(() => {
     if (!state.activeTask) {
       worker.terminate();
@@ -44,7 +51,6 @@ export function TaskContextProvider({ children }: { children: ReactNode }) {
     worker.postMessage(state);
   }, [worker, state.activeTask]);
 
-  // Passo 3: useEffect para carregar o áudio (Safari Friendly)
   useEffect(() => {
     if (!state.activeTask) {
       playBeepRef.current = null;
@@ -54,7 +60,6 @@ export function TaskContextProvider({ children }: { children: ReactNode }) {
     if (playBeepRef.current === null) {
       const play = loadBeep();
       playBeepRef.current = play;
-      // Primeiro play para destravar o autoplay do navegador
       play();
     }
   }, [state.activeTask]);
