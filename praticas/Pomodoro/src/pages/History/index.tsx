@@ -3,20 +3,19 @@ import { Container } from '../../components/Container';
 import { DefaultButton } from '../../components/DefaultButton';
 import { Heading } from '../../components/Heading';
 import { MainTemplate } from '../../templates/MainTemplate';
-import { useTaskContext } from '../../contexts/TaskContext/useTaskContext'; // Mantendo seu hook correto
+import { useTaskContext } from '../../contexts/TaskContext/useTaskContext';
 import { formatDate } from '../../utils/formatDate';
 import { getTaskStatus } from '../../utils/getTaskStatus';
 import { sortTasks, type SortTasksOptions } from '../../utils/sortTasks';
-import { TaskActionTypes } from '../../contexts/TaskContext/TaskActions'; // Mantendo seu arquivo corrigido
+import { TaskActionTypes } from '../../contexts/TaskContext/TaskActions';
 import { showMessage } from '../../adapters/showMessage';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styles from './styles.module.css';
 
 export function History() {
   const { state, dispatch } = useTaskContext();
   const hasTasks = state.tasks.length > 0;
 
-  // Estado local simplificado para controlar apenas os critérios da ordenação (campo e direção)
   const [sortConfig, setSortConfig] = useState<{
     field: NonNullable<SortTasksOptions['field']>;
     direction: NonNullable<SortTasksOptions['direction']>;
@@ -25,14 +24,23 @@ export function History() {
     direction: 'desc',
   });
 
-  // Calcula a lista ordenada de forma dinâmica a cada renderização (reage na hora ao dispatch de reset!)
   const sortedTasks = sortTasks({
     tasks: state.tasks,
     field: sortConfig.field,
     direction: sortConfig.direction,
   });
 
-  // --- O useEffect PROVADOR DE ERROS FOI COMPLETAMENTE REMOVIDO DAQUI ---
+  // Efeito para setar o título dinâmico da aba
+  useEffect(() => {
+    document.title = 'Histórico - Chronos Pomodoro';
+  }, []);
+
+  // Efeito de cleanup para sumir com o toast ao mudar de rota
+  useEffect(() => {
+    return () => {
+      showMessage.dismiss();
+    };
+  }, []);
 
   function handleSortTasks(clickedField: NonNullable<SortTasksOptions['field']>) {
     setSortConfig(prevConfig => {
@@ -43,9 +51,7 @@ export function History() {
   }
 
   function handleResetHistory() {
-    showMessage.dismiss(); 
-    
-    // Passamos a ação diretamente no callback do Toastify. Sem estados intermediários!
+    showMessage.dismiss();
     showMessage.confirm('Deseja apagar todo o histórico de tarefas?', confirmation => {
       if (confirmation) {
         dispatch({ type: TaskActionTypes.RESET_STATE });
@@ -95,8 +101,6 @@ export function History() {
               <tbody>
                 {sortedTasks.map(task => {
                   const statusText = getTaskStatus(task, state.activeTask);
-
-                  // Dicionário corrigido com seus tipos reais
                   const taskTypeDictionary = {
                     focus: 'Foco',
                     shortBreak: 'Descanso curto',
@@ -121,13 +125,7 @@ export function History() {
         )}
 
         {!hasTasks && (
-          <p style={{ 
-            textAlign: 'center', 
-            fontWeight: 'bold', 
-            fontSize: '1.8rem', 
-            color: 'var(--text-light)', 
-            padding: '4rem 0'
-          }}>
+          <p style={{ textAlign: 'center', fontWeight: 'bold', fontSize: '1.8rem', color: 'var(--text-light)', padding: '4rem 0' }}>
             Ainda não existem tarefas criadas.
           </p>
         )}

@@ -1,17 +1,43 @@
-import type { TaskModel } from '../../models/TaskModel'; // Certifique-se de que o caminho até o seu model está correto
+import type { TaskModel } from '../../models/TaskModel';
+import type { TaskStateModel } from '../../models/TaskStateModel';
 
 export const TaskActionTypes = {
   START_TASK: 'START_TASK',
+  INTERRUPT_TASK: 'INTERRUPT_TASK',
+  RESET_STATE: 'RESET_STATE',
   COUNT_DOWN: 'COUNT_DOWN',
   COMPLETE_TASK: 'COMPLETE_TASK',
-  INTERRUPT_TASK: 'INTERRUPT_TASK',
-  RESET_STATE: 'RESET_STATE', 
+  CHANGE_SETTINGS: 'CHANGE_SETTINGS', // <- Adicionado
 } as const;
 
-export type TaskAction =
-  /* CORREÇÃO AQUI: Substituímos o 'any' pelo modelo real TaskModel */
-  | { type: typeof TaskActionTypes.START_TASK; payload: TaskModel } 
-  | { type: typeof TaskActionTypes.COUNT_DOWN; payload: { secondsRemaining: number } }
-  | { type: typeof TaskActionTypes.COMPLETE_TASK }
-  | { type: typeof TaskActionTypes.INTERRUPT_TASK }
-  | { type: typeof TaskActionTypes.RESET_STATE };
+export type TaskActionTypes =
+  (typeof TaskActionTypes)[keyof typeof TaskActionTypes];
+
+export type TaskActionsWithPayload =
+  | {
+    type: typeof TaskActionTypes.START_TASK;
+    payload: TaskModel;
+  }
+  | {
+    type: typeof TaskActionTypes.COUNT_DOWN;
+    payload: { secondsRemaining: number };
+  }
+  | {
+    type: typeof TaskActionTypes.CHANGE_SETTINGS;
+    payload: TaskStateModel['config']; // <- Tipado com a estrutura real do seu modelo
+  };
+
+export type TaskActionsWithoutPayload =
+  | {
+    type: typeof TaskActionTypes.RESET_STATE;
+  }
+  | {
+    type: typeof TaskActionTypes.INTERRUPT_TASK;
+  }
+  | {
+    type: typeof TaskActionTypes.COMPLETE_TASK;
+  };
+
+export type TaskActionModel =
+  | TaskActionsWithPayload
+  | TaskActionsWithoutPayload;

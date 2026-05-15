@@ -26,3 +26,15 @@
   width: 2.4rem;
   height: 2.4rem;
 }
+/* Procure a classe que estiliza o <header> ou a barra superior e ajuste-a assim: */
+.headerContainer { /* Use o nome exato da classe que está no seu projeto */
+  display: flex;
+  justify-content: space-between; /* Mantém a logo na esquerda e os botões na direita */
+  align-items: center;            /* Garante que a logo fique perfeitamente alinhada na mesma linha dos botões */
+  
+  /* A SOLUÇÃO: Adiciona 1.6rem de espaço em cima/baixo e 2rem nas laterais */
+  padding: 1.6rem 2rem;           
+  
+  width: 100%;
+  box-sizing: border-box;
+}

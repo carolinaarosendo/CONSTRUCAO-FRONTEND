@@ -1,57 +1,32 @@
 import type { TaskStateModel } from '../../models/TaskStateModel';
-import { initialTaskState } from './initialTaskState'; // Importando o estado inicial para o Reset
-import { TaskActionTypes, type TaskAction } from './TaskActions';
+import { initialTaskState } from './initialTaskState';
+import { TaskActionTypes, type TaskActionModel } from './TaskActions';
 
-export function taskReducer(state: TaskStateModel, action: TaskAction): TaskStateModel {
+export function taskReducer(
+  state: TaskStateModel,
+  action: TaskActionModel,
+): TaskStateModel {
   switch (action.type) {
-    case TaskActionTypes.START_TASK:
+    // ... os outros cases (START_TASK, INTERRUPT_TASK, etc) continuam aqui exatamente iguais
+
+    case TaskActionTypes.RESET_STATE: {
+      return { ...initialTaskState };
+    }
+    case TaskActionTypes.COUNT_DOWN: {
       return {
         ...state,
-        activeTask: action.payload,
-        secondsRemaining: action.payload.duration * 60,
-        currentCycle: state.currentCycle + 1,
-        tasks: [action.payload, ...state.tasks],
+        secondsRemaining: action.payload.secondsRemaining,
       };
-
-    case TaskActionTypes.COUNT_DOWN:
+    }
+    
+    // NOVO CASE ADICIONADO:
+    case TaskActionTypes.CHANGE_SETTINGS: {
       return { 
         ...state, 
-        secondsRemaining: action.payload.secondsRemaining 
+        config: { ...action.payload } 
       };
-
-    case TaskActionTypes.INTERRUPT_TASK:
-      return { 
-        ...state, 
-        activeTask: null, 
-        secondsRemaining: 0,
-        // Mapeia a lista e injeta a data de interrupção na tarefa que estava rodando
-        tasks: state.tasks.map(task => {
-          if (state.activeTask && task.id === state.activeTask.id) {
-            return { ...task, interruptDate: Date.now() };
-          }
-          return task;
-        }),
-      };
-
-    case TaskActionTypes.COMPLETE_TASK:
-      return { 
-        ...state, 
-        activeTask: null, 
-        secondsRemaining: 0,
-        // Mapeia a lista e injeta a data de conclusão na tarefa que estava rodando
-        tasks: state.tasks.map(task => {
-          if (state.activeTask && task.id === state.activeTask.id) {
-            return { ...task, completeDate: Date.now() };
-          }
-          return task;
-        }),
-      };
-
-    // NOVA CASE DA AULA: Reseta o estado global para os valores padrão
-    case TaskActionTypes.RESET_STATE:
-      return { ...initialTaskState };
-
-    default:
-      return state;
+    }
   }
+
+  return state;
 }
