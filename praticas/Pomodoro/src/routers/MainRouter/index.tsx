@@ -1,13 +1,12 @@
-import { useEffect } from 'react';
 import { BrowserRouter, Route, Routes, useLocation, Navigate } from 'react-router';
-
 import { AboutPomodoro } from '../../pages/AboutPomodoro';
 import { NotFound } from '../../pages/NotFound';
 import { Home } from '../../pages/Home';
 import { Login } from '../../pages/Login';
+import { History } from '../../pages/History'; // Novo import!
 import { useAuth } from '../../contexts/AuthContext';
+import { useEffect } from 'react';
 
-// 1. Componente para resetar o Scroll
 function ScrollToTop() {
   const { pathname } = useLocation();
 
@@ -18,34 +17,25 @@ function ScrollToTop() {
   return null;
 }
 
-// 2. Componente de Proteção de Rota
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
   const { isAuthenticated } = useAuth();
   return isAuthenticated ? <>{children}</> : <Navigate to="/" />;
 }
 
-// 3. O Roteador Principal
 export function MainRouter() {
   return (
     <BrowserRouter>
-      <ScrollToTop /> {/* Ativado em todas as trocas de rota */}
       <Routes>
-        {/* Rota Pública */}
         <Route path='/' element={<Login />} />
-
-        {/* Rotas Protegidas */}
-        <Route 
-          path='/home' 
-          element={<ProtectedRoute><Home /></ProtectedRoute>} 
-        />
-        <Route 
-          path='/about-pomodoro/' 
-          element={<ProtectedRoute><AboutPomodoro /></ProtectedRoute>} 
-        />
-
-        {/* Rota 404 */}
+        
+        {/* Rotas protegidas */}
+        <Route path='/home' element={<ProtectedRoute><Home /></ProtectedRoute>} />
+        <Route path='/about-pomodoro' element={<ProtectedRoute><AboutPomodoro /></ProtectedRoute>} />
+        <Route path='/history/' element={<ProtectedRoute><History /></ProtectedRoute>} />
+        
         <Route path='*' element={<NotFound />} />
       </Routes>
+      <ScrollToTop />
     </BrowserRouter>
   );
 }

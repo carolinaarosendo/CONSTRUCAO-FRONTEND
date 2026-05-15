@@ -1,24 +1,30 @@
-import { useRef } from 'react';
 import { PlayCircleIcon, StopCircleIcon } from 'lucide-react';
+import { Cycles } from '../Cycles';
+import { DefaultButton } from '../DefaultButton';
+import { DefaultInput } from '../DefaultInput';
+import { useRef } from 'react';
+import type { TaskModel } from '../../models/TaskModel';
 import { useTaskContext } from '../../contexts/TaskContext/useTaskContext';
 import { getNextCycle } from '../../utils/getNextCycle';
 import { getNextCycleType } from '../../utils/getNextCycleType';
 import { TaskActionTypes } from '../../contexts/TaskContext/TaskActions';
-import type { TaskModel } from '../../models/TaskModel';
+import { Tips } from '../Tips';
 import { showMessage } from '../../adapters/showMessage';
-
-import { DefaultInput } from '../DefaultInput';
-import { DefaultButton } from '../DefaultButton';
 
 export function MainForm() {
   const { state, dispatch } = useTaskContext();
   const taskNameInput = useRef<HTMLInputElement>(null);
 
-  function handleCreateNewTask(event: React.FormEvent) {
-    event.preventDefault();
-    showMessage.dismiss(); 
+  // A MUDANÇA DA AULA AQUI: Pega o nome da última tarefa se ela existir
+  const lastTaskName = state.tasks[state.tasks.length - 1]?.name || '';
 
-    const taskName = taskNameInput.current?.value.trim();
+  function handleCreateNewTask(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    showMessage.dismiss();
+
+    if (taskNameInput.current === null) return;
+
+    const taskName = taskNameInput.current.value.trim();
 
     if (!taskName) {
       showMessage.warn('Digite o nome da tarefa');
@@ -26,7 +32,7 @@ export function MainForm() {
     }
 
     const nextCycle = getNextCycle(state.currentCycle);
-    const nextCycleType = getNextCycleType(nextCycle);
+    const nextCyleType = getNextCycleType(nextCycle);
 
     const newTask: TaskModel = {
       id: Date.now().toString(),
@@ -34,22 +40,12 @@ export function MainForm() {
       startDate: Date.now(),
       completeDate: null,
       interruptDate: null,
-      duration: state.config[nextCycleType],
-      type: nextCycleType,
+      duration: state.config[nextCyleType],
+      type: nextCyleType,
     };
 
-    // Verifique se no seu Reducer o nome é START_TASK ou CREATE_NEW_TASK
-    // Na aula costuma ser START_TASK para iniciar o worker
-    dispatch({ 
-      type: TaskActionTypes.START_TASK, 
-      payload: newTask 
-    });
-
-    showMessage.success('Tarefa iniciada!');
-    
-    if (taskNameInput.current) {
-      taskNameInput.current.value = '';
-    }
+    dispatch({ type: TaskActionTypes.START_TASK, payload: newTask });
+    showMessage.success('Tarefa iniciada');
   }
 
   function handleInterruptTask() {
@@ -59,31 +55,48 @@ export function MainForm() {
   }
 
   return (
-    <form onSubmit={handleCreateNewTask} className="form">
-      <div className="formRow">
+    <form onSubmit={handleCreateNewTask} className='form' action=''>
+      <div className='formRow'>
         <DefaultInput
-          labelText="Tarefa"
-          id="task"
-          placeholder="No que você vai focar agora?"
+          labelText='task'
+          id='meuInput'
+          type='text'
+          placeholder='Digite algo'
           ref={taskNameInput}
-          disabled={!!state.activeTask} // Trava o input enquanto a tarefa corre
+          disabled={!!state.activeTask}
+          defaultValue={lastTaskName} // SEGUNDA MUDANÇA: Preenche automaticamente usando a Ref
         />
       </div>
 
-      <div className="formRow">
-        {!state.activeTask ? (
+      <div className='formRow'>
+        <Tips />
+      </div>
+
+      {state.currentCycle > 0 && (
+        <div className='formRow'>
+          <Cycles />
+        </div>
+      )}
+
+      <div className='formRow'>
+        {!state.activeTask && (
           <DefaultButton
-            title="Iniciar nova tarefa"
-            type="submit"
+            aria-label='Iniciar nova tarefa'
+            title='Iniciar nova tarefa'
+            type='submit'
             icon={<PlayCircleIcon />}
           />
-        ) : (
+        )}
+
+        {!!state.activeTask && (
           <DefaultButton
-            title="Interromper tarefa atual"
-            type="button"
-            color="red"
+            aria-label='Interromper tarefa atual'
+            title='Interromper tarefa atual'
+            type='button'
+            color='red'
             icon={<StopCircleIcon />}
             onClick={handleInterruptTask}
+            key='botao_button'
           />
         )}
       </div>

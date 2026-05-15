@@ -9,7 +9,6 @@ import './styles/globals.css';
 export function App() {
   return (
     <AuthContextProvider>
-      {/* Verifique se o nome aqui é EXATAMENTE o que você exportou */}
       <TaskContextProvider>
         <MessagesContainer>
           <MainRouter />

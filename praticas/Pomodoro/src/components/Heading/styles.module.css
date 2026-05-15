@@ -1,7 +1,14 @@
-/* src/components/Heading.module.css (ou global, dependendo de como você estruturou) */
 .heading {
-  display: flex; /* Ativa o Flexbox */
-  justify-content: center; /* Centraliza o conteúdo horizontalmente */
-  align-items: center; /* Centraliza o conteúdo verticalmente (alinhamento perfeito) */
-  gap: 2.4rem; /* Adiciona 24px de espaço entre o texto e o botão/ícone */
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 2.4rem;
+  width: 100%;
+  margin: 0;
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  font-weight: 700;
+  color: var(--text-light); /* Atualizado para usar seu bege claro */
+  text-align: center;
+  padding: 2.4rem 0;
 }
