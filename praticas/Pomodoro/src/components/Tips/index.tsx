@@ -4,35 +4,35 @@ import { getNextCycleType } from '../../utils/getNextCycleType';
 
 export function Tips() {
   const { state } = useTaskContext();
-  
   const nextCycle = getNextCycle(state.currentCycle);
   const nextCycleType = getNextCycleType(nextCycle);
 
-  // Mensagens para quando o cronômetro ESTÁ rodando
+  // Mapeamento das dicas quando há tarefa ativa
+  // Mudamos workTime -> focus e shortBreakTime -> shortBreak para bater com seu state.config
   const tipsForWhenActiveTask = {
-    workTime: <span>Foque por <strong>{state.config.workTime} min</strong></span>,
-    shortBreakTime: <span>Descanse por <strong>{state.config.shortBreakTime} min</strong></span>,
-    longBreakTime: <span>Descanso longo (recupere as energias!)</span>,
+    focus: <span>Foque por {state.config.focus}min</span>,
+    shortBreak: <span>Descanse por {state.config.shortBreak}min</span>,
+    longBreak: <span>Descanso longo</span>,
   };
 
-  // Mensagens para quando o cronômetro ESTÁ PARADO (previsão)
+  // Mapeamento das dicas quando NÃO há tarefa ativa
   const tipsForNoActiveTask = {
-    workTime: (
-      <span>Próximo ciclo: foco de <strong>{state.config.workTime} min</strong></span>
+    focus: (
+      <span>
+        Próximo ciclo é de <b>{state.config.focus}min</b>
+      </span>
     ),
-    shortBreakTime: (
-      <span>Próxima pausa: <strong>{state.config.shortBreakTime} min</strong></span>
+    shortBreak: (
+      <span>Próximo descanso é de {state.config.shortBreak}min</span>
     ),
-    longBreakTime: <span>O próximo descanso será longo</span>,
+    longBreak: <span>Próximo descanso será longo</span>,
   };
 
   return (
-    <div className="tipsContainer">
-      {/* Se tiver tarefa ativa, usa o type da tarefa atual */}
+    <>
+      {/* Usamos o tipo da tarefa ativa ou o próximo tipo para buscar no objeto */}
       {!!state.activeTask && tipsForWhenActiveTask[state.activeTask.type]}
-      
-      {/* Se NÃO tiver tarefa ativa, usa o tipo do próximo ciclo */}
       {!state.activeTask && tipsForNoActiveTask[nextCycleType]}
-    </div>
+    </>
   );
 }

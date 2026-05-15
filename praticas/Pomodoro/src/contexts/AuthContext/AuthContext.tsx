@@ -1,10 +1,10 @@
 import { createContext, useState, type ReactNode } from 'react';
 
-export interface AuthContextType {
+export type AuthContextType = {
   isAuthenticated: boolean;
   login: (u: string, p: string) => boolean;
   logout: () => void;
-}
+};
 
 // eslint-disable-next-line react-refresh/only-export-components
 export const AuthContext = createContext<AuthContextType | undefined>(undefined);

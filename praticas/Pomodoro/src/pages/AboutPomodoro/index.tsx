@@ -1,6 +1,7 @@
 import { Container } from '../../components/Container';
 import { GenericHtml } from '../../components/GenericHtml';
 import { Heading } from '../../components/Heading';
+import { RouterLink } from '../../components/RouterLink'; // 1. Importar o wrapper
 import { MainTemplate } from '../../templates/MainTemplate';
 
 export function AboutPomodoro() {
@@ -17,7 +18,7 @@ export function AboutPomodoro() {
           </p>
 
           <img
-            src='[https://placehold.co/1920x1080](https://placehold.co/1920x1080)'
+            src='https://placehold.co/1920x1080'
             alt='Exemplo'
           />
 
@@ -46,7 +47,23 @@ export function AboutPomodoro() {
             personalizações pra deixar o processo ainda mais eficiente.
           </p>
 
-          {/* Pode adicionar o resto do texto explicativo aqui! */}
+          {/* 2. Adicionando os links internos conforme a tarefa da aula */}
+          <p>
+            Você pode configurar o tempo de foco e pausas do seu jeito! 
+            Basta acessar a <RouterLink href='/settings/'>página de configurações</RouterLink>.
+          </p>
+
+          <p>
+            Todas as suas tarefas concluídas ficam salvas no{' '}
+            <RouterLink href='/history/'>histórico</RouterLink>.
+          </p>
+
+          <p>
+            <strong>Pronto pra focar?</strong> Bora lá{' '}
+            <RouterLink href='/home'>voltar para a página inicial</RouterLink> e
+            iniciar seus Pomodoros! 🍅🚀
+          </p>
+
         </GenericHtml>
       </Container>
     </MainTemplate>
