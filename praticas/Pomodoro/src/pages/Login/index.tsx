@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
+import styles from './styles.module.css';
 
 export function Login() {
   const [username, setUsername] = useState('');
@@ -9,53 +10,51 @@ export function Login() {
   const navigate = useNavigate();
 
   function handleSubmit(e: React.FormEvent) {
-    e.preventDefault(); // Impede a página de recarregar
-    
+    e.preventDefault();
     const success = login(username, password);
-
     if (success) {
-      alert("Login realizado com sucesso! 🎉");
-      navigate('/home'); // Te manda para a tela principal
+      navigate('/home');
     } else {
-      alert("Usuário ou senha incorretos! ❌");
+      alert('Usuário ou senha inválidos! (Use demo / 123)');
     }
   }
 
   return (
-    <div className="login-container">
-      <h1>Chronos Login</h1>
+    <div className={styles.container}>
+      <h1 className={styles.title}>Chronos Login</h1>
       
-      <form onSubmit={handleSubmit}>
-        <div className="input-group">
-          <label>Usuário</label>
-          <input 
-            type="text" 
-            placeholder="Seu usuário" 
+      <form className={styles.form} onSubmit={handleSubmit}>
+        <div className={styles.inputGroup}>
+          <label htmlFor="username">Usuário</label>
+          <input
+            id="username"
+            type="text"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
-            required
+            placeholder="Seu usuário"
           />
         </div>
 
-        <div className="input-group">
-          <label>Senha</label>
-          <input 
-            type="password" 
-            placeholder="Sua senha" 
+        <div className={styles.inputGroup}>
+          <label htmlFor="password">Senha</label>
+          <input
+            id="password"
+            type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            required
+            placeholder="••••••"
           />
         </div>
 
-        <button type="submit" className="btn-primary">Entrar</button>
+        <button type="submit" className={styles.button}>
+          Entrar
+        </button>
+
+        <div className={styles.footerLinks}>
+          <a href="#" className={styles.link}>Cadastrar-se</a>
+          <a href="#" className={styles.link}>Esqueci a senha</a>
+        </div>
       </form>
-
-      <button className="btn-secondary">Cadastrar</button>
-
-      <div className="links">
-        <a href="#">Esqueci a senha</a>
-      </div>
     </div>
   );
 }
