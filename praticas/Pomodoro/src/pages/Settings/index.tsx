@@ -15,16 +15,16 @@ export function Settings() {
   const shortBreakTimeInput = useRef<HTMLInputElement>(null);
   const longBreakTimeInput = useRef<HTMLInputElement>(null);
 
-  // Efeito para setar o título dinâmico da aba
   useEffect(() => {
     document.title = 'Configurações - Chronos Pomodoro';
   }, []);
+
 
   function handleSaveSettings(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     showMessage.dismiss();
 
-    const formErrors: string[] = [];
+    const formErrors = [];
 
     const workTime = Number(workTimeInput.current?.value);
     const shortBreakTime = Number(shortBreakTimeInput.current?.value);
@@ -56,12 +56,12 @@ export function Settings() {
     dispatch({
       type: TaskActionTypes.CHANGE_SETTINGS,
       payload: {
-        focus: workTime,
-        shortBreak: shortBreakTime,
-        longBreak: longBreakTime,
+        workTime,
+        shortBreakTime,
+        longBreakTime,
       },
     });
-    showMessage.success('Configurações salvas com sucesso!');
+    showMessage.success('Configurações salvas');
   }
 
   return (
@@ -71,45 +71,46 @@ export function Settings() {
       </Container>
 
       <Container>
-        <p style={{ textAlign: 'center', fontSize: '1.6rem', color: 'var(--text-light)', marginBottom: '2rem' }}>
-          Modifique as configurações para tempo de foco, descanso curto e descanso longo.
+        <p style={{ textAlign: 'center' }}>
+          Modifique as configurações para tempo de foco, descanso curso e
+          descanso longo.
         </p>
       </Container>
 
       <Container>
-        <form onSubmit={handleSaveSettings} className="form">
-          <div className="formRow">
+        <form onSubmit={handleSaveSettings} action='' className='form'>
+          <div className='formRow'>
             <DefaultInput
-              id="workTime"
-              labelText="Foco"
+              id='workTime'
+              labelText='Foco'
               ref={workTimeInput}
-              defaultValue={state.config?.focus}
-              type="number"
+              defaultValue={state.config.workTime}
+              type='number'
             />
           </div>
-          <div className="formRow">
+          <div className='formRow'>
             <DefaultInput
-              id="shortBreakTime"
-              labelText="Descanso curto"
+              id='shortBreakTime'
+              labelText='Descanso curto'
               ref={shortBreakTimeInput}
-              defaultValue={state.config?.shortBreak}
-              type="number"
+              defaultValue={state.config.shortBreakTime}
+              type='number'
             />
           </div>
-          <div className="formRow">
+          <div className='formRow'>
             <DefaultInput
-              id="longBreakTime"
-              labelText="Descanso longo"
+              id='longBreakTime'
+              labelText='Descanso longo'
               ref={longBreakTimeInput}
-              defaultValue={state.config?.longBreak}
-              type="number"
+              defaultValue={state.config.longBreakTime}
+              type='number'
             />
           </div>
-          <div className="formRow">
+          <div className='formRow'>
             <DefaultButton
               icon={<SaveIcon />}
-              aria-label="Salvar configurações"
-              title="Salvar configurações"
+              aria-label='Salvar configurações'
+              title='Salvar configurações'
             />
           </div>
         </form>

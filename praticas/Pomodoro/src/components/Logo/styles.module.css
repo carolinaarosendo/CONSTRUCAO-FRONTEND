@@ -48,3 +48,12 @@
 }
 
 /* Mantenha o restante das classes (.logoText, .logoHighlight) iguais abaixo */
+.logoLink {
+  text-decoration: none;
+  color: var(--text-light);
+  display: flex;
+  align-items: center;
+  justify-content: center; /* Garante centralização interna */
+  gap: 0.8rem;
+  user-select: none;
+}

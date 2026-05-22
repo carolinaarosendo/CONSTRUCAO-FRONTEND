@@ -1,14 +1,14 @@
-// O 'type' aqui é obrigatório na sua configuração
 import type { TaskModel } from './TaskModel';
 
-export interface TaskStateModel {
+export type TaskStateModel = {
   tasks: TaskModel[];
-  activeTask: TaskModel | null;
-  currentCycle: number;
   secondsRemaining: number;
+  formattedSecondsRemaining: string;
+  activeTask: TaskModel | null;
+  currentCycle: number; // 1 a 8
   config: {
-    focus: number;
-    shortBreak: number;
-    longBreak: number;
+    workTime: number;
+    shortBreakTime: number;
+    longBreakTime: number;
   };
-}
+};

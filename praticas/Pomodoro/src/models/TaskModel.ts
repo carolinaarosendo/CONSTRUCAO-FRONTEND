@@ -5,8 +5,7 @@ export type TaskModel = {
   name: string;
   duration: number;
   startDate: number;
-  completeDate: number | null;
-  interruptDate: number | null;
-  // Isso remove a necessidade de importar o objeto inteiro, só o tipo
+  completeDate: number | null; // quando o timer chega ao final
+  interruptDate: number | null; // quando a task for interrompida
   type: keyof TaskStateModel['config'];
 };

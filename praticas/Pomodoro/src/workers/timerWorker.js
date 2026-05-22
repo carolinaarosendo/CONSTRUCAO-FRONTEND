@@ -1,32 +1,31 @@
-let isRunning = false;
+let timerId = 0;
 
-self.onmessage = function (event) {
-  if (isRunning) return;
+// Usando o escopo global self diretamente (compatível com qualquer modo de inicialização)
+self.onmessage = function (e) {
+  if (!e || !e.data) return;
 
-  isRunning = true;
+  const state = e.data;
 
-  const state = event.data;
-  const { activeTask, secondsRemaining } = state;
-
-  // Calcula o momento exato em que a tarefa deve acabar
-  const endDate = activeTask.startDate + secondsRemaining * 1000;
-  
-  function tick() {
-    const now = Date.now();
-    // Math.floor para arredondar para baixo a diferença
-    let countDownSeconds = Math.floor((endDate - now) / 1000);
-
-    if (countDownSeconds <= 0) {
-      self.postMessage(0);
-      isRunning = false; // Permite que o worker aceite novas mensagens no futuro
-      return;
+  if (!state || !state.activeTask) {
+    if (timerId) {
+      clearInterval(timerId);
+      timerId = 0;
     }
-
-    self.postMessage(countDownSeconds);
-
-    // Agenda o próximo "tic" para daqui a 1 segundo
-    setTimeout(tick, 1000);
+    return;
   }
 
-  tick();
+  if (timerId) return;
+
+  let secondsRemaining = state.secondsRemaining;
+
+  timerId = setInterval(() => {
+    secondsRemaining--;
+    
+    self.postMessage(secondsRemaining);
+
+    if (secondsRemaining <= 0) {
+      clearInterval(timerId);
+      timerId = 0;
+    }
+  }, 1000);
 };

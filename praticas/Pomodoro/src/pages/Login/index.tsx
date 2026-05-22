@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
+import { showMessage } from '../../adapters/showMessage'; // Importando o adaptador de mensagens
 import styles from './styles.module.css';
 
 export function Login() {
@@ -11,12 +12,28 @@ export function Login() {
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
+    showMessage.dismiss(); // Limpa mensagens anteriores
+
     const success = login(username, password);
     if (success) {
       navigate('/home');
     } else {
-      alert('Usuário ou senha inválidos! (Use demo / 123)');
+      showMessage.error('Usuário ou senha inválidos! (Use demo / 123)');
     }
+  }
+
+  // Função simulada para o clique no link de cadastro
+  function handleRegisterSimulate(e: React.MouseEvent) {
+    e.preventDefault();
+    showMessage.dismiss();
+    showMessage.info('Fluxo de cadastro ainda será implementado'); // Feedback exigido pelo professor
+  }
+
+  // Função simulada para o clique no link de recuperar senha
+  function handleForgotPasswordSimulate(e: React.MouseEvent) {
+    e.preventDefault();
+    showMessage.dismiss();
+    showMessage.info('Fluxo de recuperação de senha ainda será implementado'); // Feedback exigido pelo professor
   }
 
   return (
@@ -51,8 +68,13 @@ export function Login() {
         </button>
 
         <div className={styles.footerLinks}>
-          <a href="#" className={styles.link}>Cadastrar-se</a>
-          <a href="#" className={styles.link}>Esqueci a senha</a>
+          {/* Conectando os eventos de clique aos links correspondentes */}
+          <a href="#" className={styles.link} onClick={handleRegisterSimulate}>
+            Cadastrar-se
+          </a>
+          <a href="#" className={styles.link} onClick={handleForgotPasswordSimulate}>
+            Esqueci a senha
+          </a>
         </div>
       </form>
     </div>
