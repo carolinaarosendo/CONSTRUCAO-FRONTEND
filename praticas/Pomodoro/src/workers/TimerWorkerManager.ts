@@ -1,32 +1,36 @@
-import type { TaskStateModel } from "../models/TaskStateModel";
-
-let instance: TimerWorkerManager | null = null;
-
 export class TimerWorkerManager {
   private worker: Worker;
+  private static instance: TimerWorkerManager | null = null;
 
   private constructor() {
-    this.worker = new Worker(new URL('./timerWorker.js', import.meta.url));
+    this.worker = new Worker(
+      new URL('./timerWorker.js', import.meta.url),
+      { type: 'module' }
+    );
   }
 
-  static getInstance() {
-    if (!instance) {
-      instance = new TimerWorkerManager();
+  static getInstance(): TimerWorkerManager {
+    if (!TimerWorkerManager.instance) {
+      TimerWorkerManager.instance = new TimerWorkerManager();
     }
-
-    return instance;
+    return TimerWorkerManager.instance;
   }
 
-  postMessage(message: TaskStateModel) {
+  postMessage(message: unknown): void {
     this.worker.postMessage(message);
   }
 
-  onmessage(cb: (e: MessageEvent) => void) {
+  setOnMessage(cb: (e: MessageEvent<unknown>) => void): void {
     this.worker.onmessage = cb;
   }
 
-  terminate() {
+  // Para o timer sem destruir o worker
+  stop(): void {
+    this.worker.postMessage({ activeTask: null });
+  }
+
+  terminate(): void {
     this.worker.terminate();
-    instance = null;
+    TimerWorkerManager.instance = null;
   }
 }

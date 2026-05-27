@@ -1,31 +1,27 @@
-let timerId = 0;
+let timerId = null;
 
-// Usando o escopo global self diretamente (compatível com qualquer modo de inicialização)
 self.onmessage = function (e) {
   if (!e || !e.data) return;
 
   const state = e.data;
 
-  if (!state || !state.activeTask) {
-    if (timerId) {
-      clearInterval(timerId);
-      timerId = 0;
-    }
-    return;
+  // Sempre limpa o timer anterior antes de começar um novo
+  if (timerId !== null) {
+    clearInterval(timerId);
+    timerId = null;
   }
 
-  if (timerId) return;
+  if (!state || !state.activeTask) return;
 
   let secondsRemaining = state.secondsRemaining;
 
   timerId = setInterval(() => {
     secondsRemaining--;
-    
     self.postMessage(secondsRemaining);
 
     if (secondsRemaining <= 0) {
       clearInterval(timerId);
-      timerId = 0;
+      timerId = null;
     }
   }, 1000);
 };
