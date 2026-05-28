@@ -7,6 +7,7 @@ export interface TaskStateModel {
   currentCycle: number;
   formattedSecondsRemaining: string; // ← estava faltando
   config: {
+    workTime: string | number | readonly string[] | undefined;
     focus: number;
     shortBreak: number;
     longBreak: number;

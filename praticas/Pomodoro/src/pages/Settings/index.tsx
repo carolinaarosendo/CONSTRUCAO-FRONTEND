@@ -56,9 +56,9 @@ export function Settings() {
     dispatch({
       type: TaskActionTypes.CHANGE_SETTINGS,
       payload: {
-        workTime,
-        shortBreakTime,
-        longBreakTime,
+        focus: workTime,
+        shortBreak: shortBreakTime,
+        longBreak: longBreakTime,
       },
     });
     showMessage.success('Configurações salvas');
@@ -84,7 +84,7 @@ export function Settings() {
               id='workTime'
               labelText='Foco'
               ref={workTimeInput}
-              defaultValue={state.config.workTime}
+              defaultValue={state.config.focus}
               type='number'
             />
           </div>
@@ -93,7 +93,7 @@ export function Settings() {
               id='shortBreakTime'
               labelText='Descanso curto'
               ref={shortBreakTimeInput}
-              defaultValue={state.config.shortBreakTime}
+              defaultValue={state.config.shortBreak}
               type='number'
             />
           </div>
@@ -102,7 +102,7 @@ export function Settings() {
               id='longBreakTime'
               labelText='Descanso longo'
               ref={longBreakTimeInput}
-              defaultValue={state.config.longBreakTime}
+              defaultValue={state.config.longBreak}
               type='number'
             />
           </div>
