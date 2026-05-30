@@ -3,54 +3,114 @@ import { prisma } from '../lib/prisma.js';
 
 export const tasksRouter = Router();
 
+// Função auxiliar para converter BigInt para Number ou String antes de enviar no JSON
+function serializeTask(task: any) {
+  return {
+    ...task,
+    startDate: task.startDate ? Number(task.startDate) : null,
+    completeDate: task.completeDate ? Number(task.completeDate) : null,
+    interruptDate: task.interruptDate ? Number(task.interruptDate) : null,
+  };
+}
+
 tasksRouter.get('/', async (_req, res) => {
-  const tasks = await prisma.task.findMany({
-    orderBy: { startDate: 'desc' },
-  });
-  return res.json(tasks);
+  try {
+    const tasks = await prisma.task.findMany({
+      orderBy: { startDate: 'desc' },
+    });
+    
+    // Converte os BigInts de todas as tasks para evitar erro de serialização
+    const serializedTasks = tasks.map(serializeTask);
+    return res.json(serializedTasks);
+  } catch (error) {
+    console.error("Erro ao listar tasks:", error);
+    return res.status(500).json({ error: "Erro interno ao buscar tarefas." });
+  }
 });
 
 tasksRouter.post('/', async (req, res) => {
-  const { id, name, duration, type, startDate } = req.body as {
-    id: string;
-    name: string;
-    duration: number;
-    type: string;
-    startDate: number;
-  };
+  try {
+    const { id, name, duration, type, startDate } = req.body;
 
-  const task = await prisma.task.create({
-    data: { id, name, duration, type, startDate: BigInt(startDate) },
-  });
+    // Validação preventiva dos campos obrigatórios
+    if (!id || !name || duration === undefined || !type || !startDate) {
+      return res.status(400).json({ 
+        error: "Dados incompletos.", 
+        message: "Os campos 'id', 'name', 'duration', 'type' e 'startDate' são obrigatórios." 
+      });
+    }
 
-  return res.status(201).json(task);
+    const task = await prisma.task.create({
+      data: { 
+        id, 
+        name, 
+        duration: Number(duration), 
+        type, 
+        startDate: BigInt(startDate) 
+      },
+    });
+
+    return res.status(201).json(serializeTask(task));
+  } catch (error) {
+    console.error("Erro ao criar task:", error);
+    return res.status(500).json({ error: "Erro interno ao criar tarefa no banco." });
+  }
 });
 
 tasksRouter.patch('/:id/complete', async (req, res) => {
-  const { id } = req.params;
-  const { completeDate } = req.body as { completeDate: number };
+  try {
+    const { id } = req.params;
+    const { completeDate } = req.body;
 
-  const task = await prisma.task.update({
-    where: { id },
-    data: { completeDate: BigInt(completeDate) },
-  });
+    if (!completeDate) {
+      return res.status(400).json({ error: "O campo 'completeDate' é obrigatório." });
+    }
 
-  return res.json(task);
+    const task = await prisma.task.update({
+      where: { id },
+      data: { completeDate: BigInt(completeDate) },
+    });
+
+    return res.json(serializeTask(task));
+  } catch (error: any) {
+    console.error("Erro ao concluir task:", error);
+    if (error.code === 'P2025') {
+      return res.status(404).json({ error: "Tarefa não encontrada." });
+    }
+    return res.status(500).json({ error: "Erro interno ao concluir tarefa." });
+  }
 });
 
 tasksRouter.patch('/:id/interrupt', async (req, res) => {
-  const { id } = req.params;
-  const { interruptDate } = req.body as { interruptDate: number };
+  try {
+    const { id } = req.params;
+    const { interruptDate } = req.body;
 
-  const task = await prisma.task.update({
-    where: { id },
-    data: { interruptDate: BigInt(interruptDate) },
-  });
+    if (!interruptDate) {
+      return res.status(400).json({ error: "O campo 'interruptDate' é obrigatório." });
+    }
 
-  return res.json(task);
+    const task = await prisma.task.update({
+      where: { id },
+      data: { interruptDate: BigInt(interruptDate) },
+    });
+
+    return res.json(serializeTask(task));
+  } catch (error: any) {
+    console.error("Erro ao interromper task:", error);
+    if (error.code === 'P2025') {
+      return res.status(404).json({ error: "Tarefa não encontrada." });
+    }
+    return res.status(500).json({ error: "Erro interno ao interromper tarefa." });
+  }
 });
 
 tasksRouter.delete('/', async (_req, res) => {
-  await prisma.task.deleteMany();
-  return res.status(204).send();
+  try {
+    await prisma.task.deleteMany();
+    return res.status(204).send();
+  } catch (error) {
+    console.error("Erro ao limpar histórico:", error);
+    return res.status(500).json({ error: "Erro interno ao limpar histórico." });
+  }
 });
