@@ -1,0 +1,59 @@
+/* Container do Link que envelopa o ícone e o texto */
+.logoLink {
+  text-decoration: none;
+  color: var(--text-light); /* Fica naquele bege bonito da paleta */
+  display: flex;
+  align-items: center;      /* Centraliza verticalmente o ícone com o texto */
+  gap: 0.8rem;              /* Espaçamento perfeito entre o ícone e o texto */
+  transition: color 0.2s ease, filter 0.2s ease;
+  user-select: none;
+}
+
+/* Efeito ao passar o mouse: muda para roxo e ganha um leve brilho */
+.logoLink:hover {
+  color: var(--primary); 
+  filter: brightness(1.1);
+}
+
+/* Estilização do ícone (se quiser aplicar uma cor ou efeito direto nele) */
+.logoIcon {
+  flex-shrink: 0;
+}
+
+/* A palavra principal "Chronos" (Bem marcada e grossa) */
+.logoText {
+  font-size: 1.8rem;
+  font-weight: 700;        /* Letra gordinha/negrito */
+  letter-spacing: -0.03em; /* Deixa as letras sutilmente mais juntas e modernas */
+}
+
+/* O sobrenome "Pomodoro" (Fininho para dar contraste estético) */
+.logoHighlight {
+  font-weight: 300;        /* Letra bem fina */
+  opacity: 0.8;            /* Deixa ligeiramente mais suave */
+  margin-left: 0.2rem;     /* Pequeno respiro após a palavra Chronos */
+}
+.logoLink {
+  text-decoration: none;
+  color: var(--text-light);
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  transition: color 0.2s ease, filter 0.2s ease;
+  user-select: none;
+
+  /* CASO SEU TOPO CONTINUE COLADO: Adicione essa margem de segurança */
+  margin-top: 1.5rem;   /* Empurra a logo para baixo, tirando do teto */
+  margin-left: 2rem;    /* Afasta a logo da parede esquerda do navegador */
+}
+
+/* Mantenha o restante das classes (.logoText, .logoHighlight) iguais abaixo */
+.logoLink {
+  text-decoration: none;
+  color: var(--text-light);
+  display: flex;
+  align-items: center;
+  justify-content: center; /* Garante centralização interna */
+  gap: 0.8rem;
+  user-select: none;
+}

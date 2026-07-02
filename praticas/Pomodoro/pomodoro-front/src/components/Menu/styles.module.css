@@ -1,0 +1,50 @@
+.menu {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.6rem;
+}
+
+.menuLink {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  background: var(--primary);
+  /* A cor do ícone recebe a cor feita para contrastar com o primary */
+  color: var(--text-over-primary);
+  transition: all 0.1s ease-in-out;
+  padding: 1.2rem;
+  border-radius: 0.8rem;
+}
+
+.menuLink:hover {
+  filter: brightness(80%);
+}
+
+.menuLink svg {
+  width: 2.4rem;
+  height: 2.4rem;
+}
+/* Procure a classe que estiliza o <header> ou a barra superior e ajuste-a assim: */
+.headerContainer { /* Use o nome exato da classe que está no seu projeto */
+  display: flex;
+  justify-content: space-between; /* Mantém a logo na esquerda e os botões na direita */
+  align-items: center;            /* Garante que a logo fique perfeitamente alinhada na mesma linha dos botões */
+  
+  /* A SOLUÇÃO: Adiciona 1.6rem de espaço em cima/baixo e 2rem nas laterais */
+  padding: 1.6rem 2rem;           
+  
+  width: 100%;
+  box-sizing: border-box;
+}
+/* No arquivo CSS que controla o topo (ex: Menu/styles.module.css ou MainTemplate/styles.module.css) */
+.headerContainer { 
+  display: flex;
+  flex-direction: column; /* Organiza os elementos um embaixo do outro */
+  align-items: center;    /* Centraliza a Logo e os Botões perfeitamente no meio da tela */
+  justify-content: center;
+  gap: 1.5rem;            /* Espaço confortável entre a logo e os botões */
+  padding: 2.5rem 2rem 1.5rem 2rem;
+  width: 100%;
+}

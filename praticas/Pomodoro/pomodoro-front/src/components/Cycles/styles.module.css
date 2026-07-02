@@ -1,0 +1,51 @@
+/* Container principal (Texto + Bolinhas) */
+.cycles {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.6rem;
+}
+
+/* Container que segura as bolinhas lado a lado */
+.cycleDots {
+  display: flex;
+  gap: 0.8rem;
+}
+
+/* A bolinha base */
+.cycleDot {
+  width: 2rem;
+  height: 2rem;
+  background-color: var(--primary); /* Cor base */
+  border-radius: 50%; /* Transforma o quadrado em círculo */
+}
+
+/* Cores específicas para os diferentes tipos de ciclo */
+.workTime {
+  background: var(--warning);
+}
+.shortBreakTime {
+  background: var(--primary);
+}
+.longBreakTime {
+  background: var(--info);
+}
+/* src/components/Cycles/styles.module.css */
+
+/* Cores específicas para os diferentes tipos de ciclo */
+
+.workTime {
+  /* Substituímos o --warning pelo seu novo Verde Água */
+  background-color: var(--accent); 
+}
+
+.shortBreakTime {
+  /* Se quiser que a pausa curta use o roxo vibrante da paleta */
+  background-color: var(--primary); 
+}
+
+.longBreakTime {
+  /* Se quiser que a pausa longa use o roxo acinzentado */
+  background-color: var(--secondary);
+}
